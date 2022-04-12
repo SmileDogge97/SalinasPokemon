@@ -1,9 +1,11 @@
 package com.example.salinaspokemon.framework.presentation
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.salinaspokemon.data.datasource.db.Pokemon
 import com.example.salinaspokemon.domain.usecase.PokemonesUseCase
 import com.example.salinaspokemon.framework.data.model.ResponsePokemones
 import com.example.salinaspokemon.framework.presentation.viewstate.PokemonesViewState
@@ -24,11 +26,15 @@ class PokemonesViewModel @Inject constructor(
         _pokemonesState.postValue(PokemonesViewState.Loadig)
         viewModelScope.launch {
             val pokemonesResult = runCatching {
-                pokemonesUseCase.execute(PokemonesUseCase.Params(151))
+                pokemonesUseCase.request(PokemonesUseCase.Params(limit = 151))
             }
             pokemonesResult.onSuccess { pokemones ->
                 val totalPokemones = pokemones.body()?.results.orEmpty()
                 if (totalPokemones.isNotEmpty()){
+                    Log.d("PokemonesViewModel/loadPokemones/número de registros", countPokemonesBD().toString())
+                    if(countPokemonesBD() ==0){
+                        for (i:Int in 0..150) pokemonesUseCase.insertAllBD(Pokemon(totalPokemones.get(i).url, totalPokemones.get(i).name))
+                    }
                     _pokemonesState.postValue(PokemonesViewState.Success(pokemones.body()!!.results))
                 } else {
                     _pokemonesState.postValue(PokemonesViewState.PokemonesNotFound)
@@ -39,5 +45,9 @@ class PokemonesViewModel @Inject constructor(
                 _pokemonesState.postValue(PokemonesViewState.Error(it.localizedMessage.orEmpty()))
             }
         }
+    }
+
+    suspend fun countPokemonesBD(): Int {
+            return pokemonesUseCase.countPokemonBD()
     }
 }

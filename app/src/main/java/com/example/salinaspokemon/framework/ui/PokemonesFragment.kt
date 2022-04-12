@@ -19,6 +19,8 @@ import com.example.salinaspokemon.framework.presentation.viewstate.PokemonesView
 import com.example.salinaspokemon.framework.ui.adapter.PokemonesListAdapter
 import com.example.salinaspokemon.utils.ValidarR
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 @AndroidEntryPoint
 class PokemonesFragment : Fragment() {
