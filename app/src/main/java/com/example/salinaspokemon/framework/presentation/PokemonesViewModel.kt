@@ -1,6 +1,5 @@
 package com.example.salinaspokemon.framework.presentation
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -24,13 +23,11 @@ class PokemonesViewModel @Inject constructor(
     fun loadPokemones() {
         _pokemonesState.postValue(PokemonesViewState.Loadig)
         viewModelScope.launch {
-            Log.d("PokemonesViewModel", "loadPokemones")
             val pokemonesResult = runCatching {
                 pokemonesUseCase.execute(PokemonesUseCase.Params(151))
             }
             pokemonesResult.onSuccess { pokemones ->
                 val totalPokemones = pokemones.body()?.results.orEmpty()
-                Log.d("PokemonesViewModel/loadPokemones/totalPokemones", pokemones.body()!!.results.toString())
                 if (totalPokemones.isNotEmpty()){
                     _pokemonesState.postValue(PokemonesViewState.Success(pokemones.body()!!.results))
                 } else {

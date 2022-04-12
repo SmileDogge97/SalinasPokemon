@@ -1,6 +1,8 @@
 package com.example.salinaspokemon.framework.data.datasource
 
 import com.example.salinaspokemon.data.datasource.PokemonesDataSource
+import com.example.salinaspokemon.data.datasource.db.Pokemon
+import com.example.salinaspokemon.data.datasource.db.PokemonDao
 import com.example.salinaspokemon.framework.data.model.ResponsePokemones
 import kotlinx.coroutines.withContext
 import retrofit2.Response

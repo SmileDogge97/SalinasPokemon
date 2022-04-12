@@ -2,14 +2,18 @@ package com.example.salinaspokemon.framework.ui
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.room.Room
+import com.example.salinaspokemon.data.datasource.db.PokemonDatabase
 import com.example.salinaspokemon.databinding.FragmentPokemonesBinding
 import com.example.salinaspokemon.framework.data.model.Result
+import com.example.salinaspokemon.data.datasource.db.Pokemon
 import com.example.salinaspokemon.framework.presentation.PokemonesViewModel
 import com.example.salinaspokemon.framework.presentation.viewstate.PokemonesViewState
 import com.example.salinaspokemon.framework.ui.adapter.PokemonesListAdapter
