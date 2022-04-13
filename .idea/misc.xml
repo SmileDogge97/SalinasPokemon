@@ -4,7 +4,8 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/miscosas/examenes de solicitud de empleo/grupo salinas con nestor/proyecto examen/app/src/main/res/layout/activity_main.xml" value="0.33" />
-        <entry key="..\:/miscosas/examenes de solicitud de empleo/grupo salinas con nestor/proyecto examen/app/src/main/res/layout/fragment_pokemones.xml" value="0.33" />
+        <entry key="..\:/miscosas/examenes de solicitud de empleo/grupo salinas con nestor/proyecto examen/app/src/main/res/layout/fragment_pokemon_info.xml" value="0.365625" />
+        <entry key="..\:/miscosas/examenes de solicitud de empleo/grupo salinas con nestor/proyecto examen/app/src/main/res/layout/fragment_pokemones.xml" value="0.5" />
         <entry key="..\:/miscosas/examenes de solicitud de empleo/grupo salinas con nestor/proyecto examen/app/src/main/res/layout/item_pokemones_list.xml" value="0.67" />
       </map>
     </option>

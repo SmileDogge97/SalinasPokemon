@@ -6,10 +6,17 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavHostController
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.room.Room
+import com.example.salinaspokemon.R
 import com.example.salinaspokemon.data.datasource.db.PokemonDatabase
 import com.example.salinaspokemon.databinding.FragmentPokemonesBinding
 import com.example.salinaspokemon.framework.data.model.Result
@@ -30,7 +37,7 @@ class PokemonesFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var pokemonesAdapter: PokemonesListAdapter
     private lateinit var contexto: Context
-
+    lateinit var vista:View
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,11 +46,13 @@ class PokemonesFragment : Fragment() {
         _binding = FragmentPokemonesBinding.inflate(inflater, container, false)
         val view = binding.root
         return view
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         contexto = requireContext().applicationContext
+        vista=view
 
         attachObservers()
         bindViews()
@@ -62,8 +71,13 @@ class PokemonesFragment : Fragment() {
             pokemonesViewModel.loadPokemonesBD()
         }
 
-        pokemonesAdapter = PokemonesListAdapter(onPokemonesSelected = {result ->
+        pokemonesAdapter = PokemonesListAdapter(onPokemonesSelected = { result ->
+            val bundle = bundleOf("name" to result.name)
+            vista.let {
+                it.findNavController().navigate(R.id.action_pokemonesFragment_to_pokemonInfoFragment, bundle)
+            }
 
+            //Navigation.findNavController(requireView()).navigate(R.id.pokemonInfoFragment, bundle)
         })
 
         binding.list.apply {

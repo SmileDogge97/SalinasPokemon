@@ -32,10 +32,6 @@ class PokemonesViewModel @Inject constructor(
             pokemonesResult.onSuccess { pokemones ->
                 val totalPokemones = pokemones.body()?.results.orEmpty()
                 if (totalPokemones.isNotEmpty()) {
-                    Log.d(
-                        "PokemonesViewModel/loadPokemones/número de registros",
-                        countPokemonesBD().toString()
-                    )
                     if (countPokemonesBD() == 0) {
                         for (i: Int in 0..150) pokemonesUseCase.insertAllBD(
                             Pokemon(
