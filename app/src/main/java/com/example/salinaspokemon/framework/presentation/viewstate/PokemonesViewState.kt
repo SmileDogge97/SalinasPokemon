@@ -1,6 +1,6 @@
 package com.example.salinaspokemon.framework.presentation.viewstate
 
-import com.example.salinaspokemon.framework.data.model.Result
+import com.example.salinaspokemon.framework.data.model.pokemones.Result
 
 sealed class PokemonesViewState{
     object Loadig:PokemonesViewState()

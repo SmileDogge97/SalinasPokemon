@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.salinaspokemon.R
 import com.example.salinaspokemon.databinding.ItemPokemonesListBinding
-import com.example.salinaspokemon.framework.data.model.Result
+import com.example.salinaspokemon.framework.data.model.pokemones.Result
 
 class PokemonesListAdapter(
     private val pokemones: MutableList<Result> = mutableListOf(),

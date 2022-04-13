@@ -1,9 +1,8 @@
 package com.example.salinaspokemon.framework.data.datasource
 
 import com.example.salinaspokemon.data.datasource.PokemonesDataSource
-import com.example.salinaspokemon.data.datasource.db.Pokemon
-import com.example.salinaspokemon.data.datasource.db.PokemonDao
-import com.example.salinaspokemon.framework.data.model.ResponsePokemones
+import com.example.salinaspokemon.framework.data.model.pokemones.ResponsePokemones
+import com.example.salinaspokemon.framework.data.model.pokemoninfo.ResponsePokemonInfo
 import kotlinx.coroutines.withContext
 import retrofit2.Response
 import javax.inject.Inject
@@ -16,6 +15,12 @@ class PokemonesDataSourceImpl @Inject constructor(
     override suspend fun getPokemones(limit: Int): Response<ResponsePokemones> =
         withContext(coroutineContext) {
             val response = endPoint.getPokemones(limit)
+            return@withContext response
+        }
+
+    override suspend fun getPokemonInfo(pokemon:String): Response<ResponsePokemonInfo> =
+        withContext(coroutineContext){
+            val response = endPoint.getPokemonInfo(pokemon)
             return@withContext response
         }
 }

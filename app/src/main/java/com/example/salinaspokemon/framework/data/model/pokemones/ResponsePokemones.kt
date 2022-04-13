@@ -1,4 +1,4 @@
-package com.example.salinaspokemon.framework.data.model
+package com.example.salinaspokemon.framework.data.model.pokemones
 
 data class ResponsePokemones(
     val count: Int,

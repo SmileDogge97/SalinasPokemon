@@ -1,19 +1,24 @@
 package com.example.salinaspokemon.framework.di
 
 import android.content.Context
-import androidx.core.content.pm.PermissionInfoCompat
 import com.example.salinaspokemon.data.datasource.PokemonesDataSource
 import com.example.salinaspokemon.data.datasource.db.PokemonDao
 import com.example.salinaspokemon.data.datasource.db.PokemonDatabase
 import com.example.salinaspokemon.data.datasource.db.PokemonesDataSourceBD
 import com.example.salinaspokemon.data.datasource.db.PokemonesDataSourceBDImpl
+import com.example.salinaspokemon.data.repository.PokemonesRepositoryDBImpl
 import com.example.salinaspokemon.data.repository.PokemonesRepositoryImpl
 import com.example.salinaspokemon.domain.repository.PokemonesRepository
+import com.example.salinaspokemon.domain.repository.PokemonesRepositoryDB
+import com.example.salinaspokemon.domain.usecase.PokemonInfoUseCase
 import com.example.salinaspokemon.domain.usecase.PokemonesUseCase
+import com.example.salinaspokemon.domain.usecase.PokemonesUseCaseDBImpl
 import com.example.salinaspokemon.framework.data.datasource.PokemonEndPoint
 import com.example.salinaspokemon.framework.data.datasource.PokemonesDataSourceImpl
-import com.example.salinaspokemon.framework.data.model.ResponsePokemones
-import com.example.salinaspokemon.utils.UseCase
+import com.example.salinaspokemon.framework.data.model.pokemones.ResponsePokemones
+import com.example.salinaspokemon.framework.data.model.pokemoninfo.ResponsePokemonInfo
+import com.example.salinaspokemon.framework.usecase.UseCase
+import com.example.salinaspokemon.framework.usecase.UseCaseDB
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -75,14 +80,29 @@ object PokemonesModule {
 
     @Provides
     fun providesPokemonesRepository(
-        datasource: PokemonesDataSource,
-        datasourceBD: PokemonesDataSourceBD
+        datasource: PokemonesDataSource
     ): PokemonesRepository =
-        PokemonesRepositoryImpl(datasource, datasourceBD)
+        PokemonesRepositoryImpl(datasource)
+
+    @Provides
+    fun providesPokemonesRepositoryDB(
+        datasourceDB: PokemonesDataSourceBD
+    ): PokemonesRepositoryDB = PokemonesRepositoryDBImpl(datasourceDB)
+
+    @Provides
+    fun providesPokemonesUseCaseDBProvider(
+        pokemonesRepositoryDB: PokemonesRepositoryDB
+    ) : UseCaseDB = PokemonesUseCaseDBImpl(pokemonesRepositoryDB)
 
     @Provides
     fun providesPokemonesUseCaseProvider(
         pokemonesRepository: PokemonesRepository
     ): UseCase<PokemonesUseCase.Params, Response<ResponsePokemones>> =
         PokemonesUseCase(pokemonesRepository)
+
+    @Provides
+    fun providesPokemonInfoUseCaseProvider(
+        pokemonesRepository: PokemonesRepository
+    ): UseCase<PokemonInfoUseCase.Params, Response<ResponsePokemonInfo>> =
+        PokemonInfoUseCase(pokemonesRepository)
 }
