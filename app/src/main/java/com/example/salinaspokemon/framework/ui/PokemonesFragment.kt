@@ -59,7 +59,7 @@ class PokemonesFragment : Fragment() {
         if (ValidarR.hayRed(contexto)) {
             pokemonesViewModel.loadPokemones()
         } else {
-            showNotFoundMessage("No hay internet banda x.x")
+            pokemonesViewModel.loadPokemonesBD()
         }
 
         pokemonesAdapter = PokemonesListAdapter(onPokemonesSelected = {result ->

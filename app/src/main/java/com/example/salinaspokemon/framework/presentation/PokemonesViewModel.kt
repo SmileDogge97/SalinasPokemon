@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.salinaspokemon.data.datasource.db.Pokemon
 import com.example.salinaspokemon.domain.usecase.PokemonesUseCase
 import com.example.salinaspokemon.framework.data.model.ResponsePokemones
+import com.example.salinaspokemon.framework.data.model.Result
 import com.example.salinaspokemon.framework.presentation.viewstate.PokemonesViewState
 import com.example.salinaspokemon.utils.UseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -30,10 +31,19 @@ class PokemonesViewModel @Inject constructor(
             }
             pokemonesResult.onSuccess { pokemones ->
                 val totalPokemones = pokemones.body()?.results.orEmpty()
-                if (totalPokemones.isNotEmpty()){
-                    Log.d("PokemonesViewModel/loadPokemones/número de registros", countPokemonesBD().toString())
-                    if(countPokemonesBD() ==0){
-                        for (i:Int in 0..150) pokemonesUseCase.insertAllBD(Pokemon(totalPokemones.get(i).url, totalPokemones.get(i).name))
+                if (totalPokemones.isNotEmpty()) {
+                    Log.d(
+                        "PokemonesViewModel/loadPokemones/número de registros",
+                        countPokemonesBD().toString()
+                    )
+                    if (countPokemonesBD() == 0) {
+                        for (i: Int in 0..150) pokemonesUseCase.insertAllBD(
+                            Pokemon(
+                                totalPokemones.get(
+                                    i
+                                ).url, totalPokemones.get(i).name
+                            )
+                        )
                     }
                     _pokemonesState.postValue(PokemonesViewState.Success(pokemones.body()!!.results))
                 } else {
@@ -47,7 +57,23 @@ class PokemonesViewModel @Inject constructor(
         }
     }
 
+    fun loadPokemonesBD() {
+        _pokemonesState.postValue(PokemonesViewState.Loadig)
+        viewModelScope.launch {
+            val lista:MutableList<Result> = mutableListOf()
+            val pokemonesResult = pokemonesUseCase.getAllBD()
+
+            for (i: Int in 0..150) lista.add(i, Result(pokemonesResult.get(i).name.toString(), pokemonesResult.get(i).url))
+
+            _pokemonesState.postValue(
+                PokemonesViewState.Success(
+                    lista.toList()
+                )
+            )
+        }
+    }
+
     suspend fun countPokemonesBD(): Int {
-            return pokemonesUseCase.countPokemonBD()
+        return pokemonesUseCase.countPokemonBD()
     }
 }
