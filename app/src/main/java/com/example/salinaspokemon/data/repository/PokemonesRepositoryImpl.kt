@@ -2,6 +2,7 @@ package com.example.salinaspokemon.data.repository
 
 import com.example.salinaspokemon.data.datasource.PokemonesDataSource
 import com.example.salinaspokemon.domain.repository.PokemonesRepository
+import com.example.salinaspokemon.framework.data.model.habilidades.ResponseHabilidades
 import com.example.salinaspokemon.framework.data.model.lineaevolutiva.ResponseLineaEvolutiva
 import com.example.salinaspokemon.framework.data.model.pokemones.ResponsePokemones
 import com.example.salinaspokemon.framework.data.model.pokemoninfo.ResponsePokemonInfo
@@ -20,4 +21,7 @@ class PokemonesRepositoryImpl @Inject constructor(
 
     override suspend fun attemptLoadPokemonLineEvo(url: String): Response<ResponseLineaEvolutiva> =
         dataSource.getLineaEvolutiva(url)
+
+    override suspend fun attemptLoadHabilidades(pokemon: String): Response<ResponseHabilidades> =
+        dataSource.getHabilidades(pokemon)
 }

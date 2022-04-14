@@ -1,5 +1,6 @@
 package com.example.salinaspokemon.framework.ui
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -27,6 +28,7 @@ class PokemonInfoFragment : Fragment() {
     private lateinit var contexto: Context
     lateinit var vista: View
     private lateinit var response: ResponsePokemonInfo
+    var nombrePokemon=""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,6 +45,7 @@ class PokemonInfoFragment : Fragment() {
         vista = view
 
         var pokemon = arguments?.getString("name")
+        nombrePokemon = pokemon.toString()
         binding?.txtPokemon?.setText(pokemon)
         attachObservers()
         bindViews(pokemon!!)
@@ -64,7 +67,8 @@ class PokemonInfoFragment : Fragment() {
         binding?.btnHabilidades?.setOnClickListener{
 
             vista.let {
-                it.findNavController().navigate(R.id.action_pokemonInfoFragment_to_habilidadesFragment)
+                val bundle = bundleOf("pokemon" to nombrePokemon)
+                it.findNavController().navigate(R.id.action_pokemonInfoFragment_to_habilidadesFragment, bundle)
             }
         }
 
@@ -102,11 +106,12 @@ class PokemonInfoFragment : Fragment() {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun diplayPokemon(response: ResponsePokemonInfo) {
-        binding?.txtColor?.append(response.color.name)
-        binding?.txtFelicidad?.append(response.base_happiness.toString())
+        binding?.txtColor?.setText("Color: "+ response.color.name)
+        binding?.txtFelicidad?.setText("Felicidad Base: "+response.base_happiness.toString())
         displayEggsGroup(response)
-        binding?.txtTasaCaptura?.append(response.capture_rate.toString())
+        binding?.txtTasaCaptura?.setText("Tasa de captura: "+response.capture_rate.toString())
     }
 
     private fun hideLoader() {
@@ -144,6 +149,7 @@ class PokemonInfoFragment : Fragment() {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun displayEggsGroup(response: ResponsePokemonInfo) {
         var huevos = ""
         for (i: Int in 0..response.egg_groups.size-1) {
@@ -155,7 +161,7 @@ class PokemonInfoFragment : Fragment() {
             }
             Log.d("PokemonInfoFragment/displayEggsGroup/huevos", huevos)
         }
-        binding?.txtGrupoHuevos?.append(huevos)
+        binding?.txtGrupoHuevos?.setText("Grupo de huevos: "+huevos)
     }
 
     override fun onDestroyView() {

@@ -10,12 +10,10 @@ import com.example.salinaspokemon.data.repository.PokemonesRepositoryDBImpl
 import com.example.salinaspokemon.data.repository.PokemonesRepositoryImpl
 import com.example.salinaspokemon.domain.repository.PokemonesRepository
 import com.example.salinaspokemon.domain.repository.PokemonesRepositoryDB
-import com.example.salinaspokemon.domain.usecase.PokemonInfoUseCase
-import com.example.salinaspokemon.domain.usecase.PokemonLineEvoUseCase
-import com.example.salinaspokemon.domain.usecase.PokemonesUseCase
-import com.example.salinaspokemon.domain.usecase.PokemonesUseCaseDBImpl
+import com.example.salinaspokemon.domain.usecase.*
 import com.example.salinaspokemon.framework.data.datasource.PokemonEndPoint
 import com.example.salinaspokemon.framework.data.datasource.PokemonesDataSourceImpl
+import com.example.salinaspokemon.framework.data.model.habilidades.ResponseHabilidades
 import com.example.salinaspokemon.framework.data.model.lineaevolutiva.ResponseLineaEvolutiva
 import com.example.salinaspokemon.framework.data.model.pokemones.ResponsePokemones
 import com.example.salinaspokemon.framework.data.model.pokemoninfo.ResponsePokemonInfo
@@ -113,4 +111,10 @@ object PokemonesModule {
         pokemonesRepository: PokemonesRepository
     ): UseCase<PokemonLineEvoUseCase.Params, Response<ResponseLineaEvolutiva>> =
         PokemonLineEvoUseCase(pokemonesRepository)
+
+    @Provides
+    fun providesPokemonHabilidadesUseCaseProvider(
+        pokemonRepository: PokemonesRepository
+    ): UseCase<PokemonHabilidadesUseCase.Params, Response<ResponseHabilidades>> =
+        PokemonHabilidadesUseCase(pokemonRepository)
 }

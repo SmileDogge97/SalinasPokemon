@@ -1,6 +1,7 @@
 package com.example.salinaspokemon.framework.data.datasource
 
 import com.example.salinaspokemon.data.datasource.PokemonesDataSource
+import com.example.salinaspokemon.framework.data.model.habilidades.ResponseHabilidades
 import com.example.salinaspokemon.framework.data.model.lineaevolutiva.ResponseLineaEvolutiva
 import com.example.salinaspokemon.framework.data.model.pokemones.ResponsePokemones
 import com.example.salinaspokemon.framework.data.model.pokemoninfo.ResponsePokemonInfo
@@ -28,6 +29,12 @@ class PokemonesDataSourceImpl @Inject constructor(
     override suspend fun getLineaEvolutiva(url: String): Response<ResponseLineaEvolutiva> =
         withContext(coroutineContext){
             val response = endPoint.getLineaEvolutiva(url)
+            return@withContext response
+        }
+
+    override suspend fun getHabilidades(pokemon: String): Response<ResponseHabilidades> =
+        withContext(coroutineContext){
+            val response = endPoint.getHabilidades(pokemon)
             return@withContext response
         }
 }
