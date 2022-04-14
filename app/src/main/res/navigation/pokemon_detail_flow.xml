@@ -18,5 +18,22 @@
         android:id="@+id/pokemonInfoFragment"
         android:name="com.example.salinaspokemon.framework.ui.PokemonInfoFragment"
         android:label="fragment_pokemon_info"
-        tools:layout="@layout/fragment_pokemon_info" />
+        tools:layout="@layout/fragment_pokemon_info" >
+        <action
+            android:id="@+id/action_pokemonInfoFragment_to_lineaEvolutiva"
+            app:destination="@id/lineaEvolutiva" />
+        <action
+            android:id="@+id/action_pokemonInfoFragment_to_habilidadesFragment"
+            app:destination="@id/habilidadesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/lineaEvolutiva"
+        android:name="com.example.salinaspokemon.framework.ui.LineaEvolutiva"
+        android:label="fragment_linea_evolutiva"
+        tools:layout="@layout/fragment_linea_evolutiva" />
+    <fragment
+        android:id="@+id/habilidadesFragment"
+        android:name="com.example.salinaspokemon.framework.ui.HabilidadesFragment"
+        android:label="fragment_habilidades"
+        tools:layout="@layout/fragment_habilidades" />
 </navigation>

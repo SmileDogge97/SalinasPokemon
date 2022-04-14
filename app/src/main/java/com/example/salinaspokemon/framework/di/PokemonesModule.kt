@@ -11,10 +11,12 @@ import com.example.salinaspokemon.data.repository.PokemonesRepositoryImpl
 import com.example.salinaspokemon.domain.repository.PokemonesRepository
 import com.example.salinaspokemon.domain.repository.PokemonesRepositoryDB
 import com.example.salinaspokemon.domain.usecase.PokemonInfoUseCase
+import com.example.salinaspokemon.domain.usecase.PokemonLineEvoUseCase
 import com.example.salinaspokemon.domain.usecase.PokemonesUseCase
 import com.example.salinaspokemon.domain.usecase.PokemonesUseCaseDBImpl
 import com.example.salinaspokemon.framework.data.datasource.PokemonEndPoint
 import com.example.salinaspokemon.framework.data.datasource.PokemonesDataSourceImpl
+import com.example.salinaspokemon.framework.data.model.lineaevolutiva.ResponseLineaEvolutiva
 import com.example.salinaspokemon.framework.data.model.pokemones.ResponsePokemones
 import com.example.salinaspokemon.framework.data.model.pokemoninfo.ResponsePokemonInfo
 import com.example.salinaspokemon.framework.usecase.UseCase
@@ -105,4 +107,10 @@ object PokemonesModule {
         pokemonesRepository: PokemonesRepository
     ): UseCase<PokemonInfoUseCase.Params, Response<ResponsePokemonInfo>> =
         PokemonInfoUseCase(pokemonesRepository)
+
+    @Provides
+    fun providesPokemonEvoLinUseCaseProvider(
+        pokemonesRepository: PokemonesRepository
+    ): UseCase<PokemonLineEvoUseCase.Params, Response<ResponseLineaEvolutiva>> =
+        PokemonLineEvoUseCase(pokemonesRepository)
 }

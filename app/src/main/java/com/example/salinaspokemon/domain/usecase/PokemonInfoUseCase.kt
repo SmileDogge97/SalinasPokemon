@@ -19,6 +19,4 @@ class PokemonInfoUseCase @Inject constructor(private val pokemonesRepository: Po
     data class Params(
         val pokemon: String
     )
-
-
 }

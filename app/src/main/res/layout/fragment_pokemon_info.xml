@@ -87,7 +87,7 @@
             android:layout_margin="6dp" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/btnLineaEvolutiva"
             android:layout_width="180dp"
             android:layout_height="50dp"
             android:layout_gravity="center_horizontal"
@@ -95,7 +95,7 @@
             android:text="Linea evolutiva" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/btnHabilidades"
             android:layout_width="180dp"
             android:layout_height="50dp"
             android:layout_gravity="center_horizontal"

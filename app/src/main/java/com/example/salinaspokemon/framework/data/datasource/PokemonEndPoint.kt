@@ -1,5 +1,6 @@
 package com.example.salinaspokemon.framework.data.datasource
 
+import com.example.salinaspokemon.framework.data.model.lineaevolutiva.ResponseLineaEvolutiva
 import com.example.salinaspokemon.framework.data.model.pokemones.ResponsePokemones
 import com.example.salinaspokemon.framework.data.model.pokemoninfo.ResponsePokemonInfo
 import retrofit2.Response
@@ -17,4 +18,9 @@ interface PokemonEndPoint {
     suspend fun getPokemonInfo(
         @Path("pokemon") pokemon: String
     ): Response<ResponsePokemonInfo>
+
+    @GET("{evolucion}")
+    suspend fun getLineaEvolutiva(
+        @Path("evolucion") evolucion: String
+    ): Response<ResponseLineaEvolutiva>
 }

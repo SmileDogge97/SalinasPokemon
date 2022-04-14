@@ -6,8 +6,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
+import com.example.salinaspokemon.R
 import com.example.salinaspokemon.databinding.FragmentPokemonInfoBinding
 import com.example.salinaspokemon.framework.data.model.pokemoninfo.ResponsePokemonInfo
 import com.example.salinaspokemon.framework.presentation.PokemonInfoViewModel
@@ -23,6 +26,7 @@ class PokemonInfoFragment : Fragment() {
     private val binding get() = _binding
     private lateinit var contexto: Context
     lateinit var vista: View
+    private lateinit var response: ResponsePokemonInfo
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -56,6 +60,20 @@ class PokemonInfoFragment : Fragment() {
         } else {
             displayError("No hay internet banda x.x")
         }
+
+        binding?.btnHabilidades?.setOnClickListener{
+
+            vista.let {
+                it.findNavController().navigate(R.id.action_pokemonInfoFragment_to_habilidadesFragment)
+            }
+        }
+
+        binding?.btnLineaEvolutiva?.setOnClickListener{
+            val bundle = bundleOf("lineaevolutiva" to response.evolution_chain.url)
+            vista.let {
+                it.findNavController().navigate(R.id.action_pokemonInfoFragment_to_lineaEvolutiva, bundle)
+            }
+        }
     }
 
     private fun showLoader() {
@@ -73,6 +91,7 @@ class PokemonInfoFragment : Fragment() {
         when (it) {
             is PokemonInfoViewState.Loading -> showLoader()
             is PokemonInfoViewState.Success -> {
+                response= it.response
                 hideLoader()
                 diplayPokemon(it.response)
             }
