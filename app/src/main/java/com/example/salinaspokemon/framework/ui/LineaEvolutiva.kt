@@ -2,19 +2,23 @@ package com.example.salinaspokemon.framework.ui
 
 import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.salinaspokemon.databinding.FragmentLineaEvolutivaBinding
 import com.example.salinaspokemon.framework.data.model.lineaevolutiva.Species
 import com.example.salinaspokemon.framework.presentation.PokemonEvoLinViewModel
 import com.example.salinaspokemon.framework.presentation.viewstate.PokemonLineEvoViewState
 import com.example.salinaspokemon.framework.ui.adapter.PokemonesLineEvoListAdapter
+import com.example.salinaspokemon.utils.PokemonFavorito
 import com.example.salinaspokemon.utils.ValidarR
 import dagger.hilt.android.AndroidEntryPoint
+import kotlin.random.Random
 
 @AndroidEntryPoint
 class LineaEvolutiva : Fragment() {
@@ -38,6 +42,7 @@ class LineaEvolutiva : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         contexto = requireContext().applicationContext
+        vista=view
         var text = arguments?.getString("lineaevolutiva")?.substring(18)
         url = text.toString()
 
@@ -59,7 +64,16 @@ class LineaEvolutiva : Fragment() {
         }
 
         pokemonesAdapter = PokemonesLineEvoListAdapter(onPokemonesSelected = { result ->
-
+            PokemonFavorito.pokemon = result.name
+            var r = (0..2).random()
+            if (r==0){
+                PokemonFavorito.statusRequest= "Favorito"
+            } else {
+                PokemonFavorito.statusRequest= "Error"
+            }
+            Thread.sleep(1*1000)
+            vista.findNavController().navigateUp()
+            vista.findNavController().navigateUp()
         })
 
         binding?.list?.apply {
@@ -67,6 +81,7 @@ class LineaEvolutiva : Fragment() {
             layoutManager = LinearLayoutManager(contexto, LinearLayoutManager.VERTICAL, false)
         }
     }
+
 
     private fun showLoader() {
         with(binding) {

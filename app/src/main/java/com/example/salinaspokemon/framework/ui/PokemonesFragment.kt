@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -16,6 +17,7 @@ import com.example.salinaspokemon.framework.data.model.pokemones.Result
 import com.example.salinaspokemon.framework.presentation.PokemonesViewModel
 import com.example.salinaspokemon.framework.presentation.viewstate.PokemonesViewState
 import com.example.salinaspokemon.framework.ui.adapter.PokemonesListAdapter
+import com.example.salinaspokemon.utils.PokemonFavorito
 import com.example.salinaspokemon.utils.ValidarR
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -71,6 +73,8 @@ class PokemonesFragment : Fragment() {
             adapter = pokemonesAdapter
             layoutManager = LinearLayoutManager(contexto, LinearLayoutManager.VERTICAL, false)
         }
+
+
     }
 
     private fun showLoader() {

@@ -1,12 +1,15 @@
 package com.example.salinaspokemon.framework.ui.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.salinaspokemon.R
+import com.example.salinaspokemon.data.datasource.db.Pokemon
 import com.example.salinaspokemon.databinding.ItemPokemonesListBinding
 import com.example.salinaspokemon.framework.data.model.pokemones.Result
+import com.example.salinaspokemon.utils.PokemonFavorito
 
 class PokemonesListAdapter(
     private val pokemones: MutableList<Result> = mutableListOf(),
@@ -31,6 +34,7 @@ class PokemonesListAdapter(
         this.pokemones.clear()
         this.pokemones.addAll(pokemones)
         notifyDataSetChanged()
+
     }
 
     class PokemonesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -39,10 +43,18 @@ class PokemonesListAdapter(
         fun bindView(pokemones: Result, onPokemonesSelected: (Result) -> Unit) {
             with(pokemones) {
                 if (name.isNotEmpty()) {
-                    binding.txtNombre.text = name
-                    binding.root.setOnClickListener {
-                        onPokemonesSelected(this)
+                    if (name.equals(PokemonFavorito.pokemon) && !PokemonFavorito.statusRequest.equals("")){
+                        binding.txtNombre.text = PokemonFavorito.statusRequest + " - " + PokemonFavorito.pokemon
+                        binding.root.setOnClickListener {
+                            onPokemonesSelected(this)
+                        }
+                    } else {
+                        binding.txtNombre.text = name
+                        binding.root.setOnClickListener {
+                            onPokemonesSelected(this)
+                        }
                     }
+
                 }
             }
         }
